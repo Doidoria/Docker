@@ -30,7 +30,7 @@ pipeline {
                             
                             # 이미지 강제 재빌드 및 컨테이너 시작
                             sudo docker-compose build --no-cache && \\
-                            sudo docker-compose up -d --scale jenkins=0
+                            sudo docker-compose up -d
                         "
                     """
                 }
