@@ -2,9 +2,8 @@ pipeline {
     agent any
     
     environment {
-        GITHUB_REPO = '배포할 GITHUB URL'
-        TARGET_DIR = 'REPOSITORY NAME'
-        EC2_HOST = '13.125.125.190'  // EC2 인스턴스의 퍼블릭 IP나 DNS
+        GITHUB_REPO = 'https://github.com/Doidoria/Docker.git'
+        EC2_HOST = '3.37.7.103'  // EC2 인스턴스의 퍼블릭 IP나 DNS
         EC2_USER = 'ec2-user'       // EC2 사용자 이름 (Amazon Linux의 경우 'ec2-user', Ubuntu의 경우 'ubuntu')
     }
     
@@ -16,13 +15,13 @@ pipeline {
                         chmod 600 \${SSH_KEY}
                         ssh -i \${SSH_KEY} -o StrictHostKeyChecking=no \${EC2_USER}@\${EC2_HOST} "
                             # 기존 디렉토리 정리
-                            rm -rf 15_DOCKER && \\
+                            rm -rf Docker && \\
                             
                             # GitHub 저장소 클론
-                            git clone 배포할 GITHUB REPO && \\
+                            git clone \${GITHUB_REPO} && \\
                             
                             # 작업 디렉토리로 이동
-                            cd 15_DOCKER/05_DOCKER_COMPOSE_DEPLOY && \\
+                            cd Docker/05_DOCKER_COMPOSE_DEPLOY && \\
                             
                             # Docker 명령어 실행 (sudo 사용)
                             sudo docker-compose down || true && \\
@@ -40,10 +39,10 @@ pipeline {
     }  
     post {
         success {
-            echo 'Deployment to EC2 completed successfully!'
+            echo 'Deployment to EC2 completed successfully![O]'
         }
         failure {
-            echo 'Deployment to EC2 failed!'
+            echo 'Deployment to EC2 failed![X]'
         }
     }
 

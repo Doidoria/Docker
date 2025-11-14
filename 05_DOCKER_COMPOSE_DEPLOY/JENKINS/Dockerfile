@@ -5,12 +5,12 @@ FROM jenkins/jenkins:lts
 USER root
 
 # 필수 유틸리티 설치
-RUN apt-get update && apt-get -y install \
-    curl \
-    unzip \
-    gnupg \
-    software-properties-common \
-    ca-certificates
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      curl \
+      unzip \
+      gnupg \
+      ca-certificates \
+   && rm -rf /var/lib/apt/lists/*
 
 # Docker CLI 설치 (공식 스크립트 이용 - docker-ce 포함)
 RUN curl -fsSL https://get.docker.com | sh
