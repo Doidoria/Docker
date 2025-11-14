@@ -79,4 +79,3 @@ services:
 
 volumes:
   db-data:
-  jenkins-data:
